@@ -11,6 +11,7 @@ public class Main {
         System.out.println(senha2.getDados());
         System.out.println(senha3.getDados());
 
+        System.out.println("Senha atual: " + SenhaAtendimento.controle);
 
     }
 }
