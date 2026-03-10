@@ -30,9 +30,11 @@ public class BilheteUnico {
         if (tipoTarifa.equalsIgnoreCase("professor") || tipoTarifa.equalsIgnoreCase("estudante")){
             valor = valor/2;
         }
-
         if (saldo<valor){
+            System.out.println("Saldo insuficiente");
             return;
         }
+
+        saldo = saldo-valor;
     }
 }
