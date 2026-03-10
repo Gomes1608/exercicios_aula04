@@ -32,29 +32,40 @@ public class Main {
 
             switch (opcao){
 
-                case 1:
-                    System.out.println("Digite o valor que deve ser adicionado: ");
-                    double valor=0;
-                    valor= sc.nextDouble();
-                    bilheteUnico.carregar(valor);
-                    break;
+                case 1 -> carregar();
 
-                case 2:
-                    System.out.println(bilheteUnico.saldo +" R$");
-                    break;
+                case 2 -> saldo();
 
-                case 3:
-                    System.out.println("Você passou pela catraca e o valor foi descontado do seu saldo");
-                    bilheteUnico.passarNaCatraca();
-                    break;
+                case 3 -> passarNaCatraca();
 
-                case 4:
-                    System.out.println("Obrigado por usar nosso sistema :D");
-                    break;
+                case 4 -> System.out.println("Obrigado por usar nosso sistema :D");
 
-                default:
-                    System.out.println("Opção inválida");
+                default -> System.out.println("Opção inválida");
             }
         } while (opcao!=4);
+
+
+
+    }
+
+    private static void passarNaCatraca() {
+        if (bilheteUnico.passarNaCatraca()==false){
+            System.out.println("Saldo insuficiente");
+        } else {
+            System.out.println("Você passou pela catraca e o valor foi descontado do seu saldo");
+            bilheteUnico.passarNaCatraca();
+        }
+        saldo();
+    }
+
+    private static void saldo() {
+        System.out.println("Saldo atual: R$ "+bilheteUnico.saldo );
+    }
+
+    private static void carregar() {
+        System.out.println("Digite o valor que deve ser adicionado: R$ ");
+        double valor=0;
+        valor= sc.nextDouble();
+        bilheteUnico.carregar(valor);
     }
 }

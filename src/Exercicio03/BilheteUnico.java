@@ -25,16 +25,16 @@ public class BilheteUnico {
         saldo+=valor;
     }
 
-    public void passarNaCatraca(){
+    public boolean passarNaCatraca(){
         double valor = TARIFABASE;
         if (tipoTarifa.equalsIgnoreCase("professor") || tipoTarifa.equalsIgnoreCase("estudante")){
             valor = valor/2;
         }
         if (saldo<valor){
-            System.out.println("Saldo insuficiente");
-            return;
+            return false;
         }
 
         saldo = saldo-valor;
+        return true;
     }
 }
