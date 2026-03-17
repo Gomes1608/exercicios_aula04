@@ -5,14 +5,14 @@ import java.util.Random;
 public class BilheteUnico {
 
     int nmrBilhete;
-    String usuario;
     double saldo;
-    final static double TARIFABASE = 5.40;
+    double tarifaBase = 5.40;
     String tipoTarifa;
+    Usuario usuario;
 
-    public BilheteUnico(String usuario, String tipoTarifa){
+
+    public BilheteUnico(Usuario usuario){
         Random r = new Random();
-        this.usuario=usuario;
         this.tipoTarifa=tipoTarifa;
         this.saldo=0;
         this.nmrBilhete = r.nextInt(1000,9999);
@@ -24,9 +24,16 @@ public class BilheteUnico {
         }
         saldo+=valor;
     }
+    public double calcularTarifa(){
+        double valor = tarifaBase;
+        if (usuario.tipoTarifa.equalsIgnoreCase("estudante")||(usuario.tipoTarifa.equalsIgnoreCase("professor"))){
+            valor = tarifaBase/2;
+        }
+        return valor;
+    }
 
     public boolean passarNaCatraca(){
-        double valor = TARIFABASE;
+        double valor = calcularTarifa();
         if (tipoTarifa.equalsIgnoreCase("professor") || tipoTarifa.equalsIgnoreCase("estudante")){
             valor = valor/2;
         }

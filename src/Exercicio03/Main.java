@@ -3,68 +3,58 @@ package Exercicio03;
 import java.util.Scanner;
 
 public class Main {
+    static BilheteUnico[] bilhete = new BilheteUnico[10];
     static Scanner sc = new Scanner(System.in);
-    static BilheteUnico bilheteUnico;
-
-    static {
-        System.out.println("Digite seu número de usuario: ");
-        String usuario= sc.nextLine();
-        System.out.println("Digite seu tipo de tarifa: normal / professor / estudante");
-        String tipoTarifa= sc.next();
-        bilheteUnico = new BilheteUnico(usuario,tipoTarifa);
-    }
-
+    static int index = 0;
 
     public static void main(String[] args) {
-
-        int opcao=0;
+        int opcao;
 
         do {
-            System.out.println("Digite o número referente a sua ação desejada: ");
-            System.out.println("------------------------------");
-            System.out.println("1 - Carregar bilhete");
-            System.out.println("2 - Consultar saldo");
-            System.out.println("3 - Passar na Catraca");
-            System.out.println("4 - Finalizar");
-            System.out.println("------------------------------");
+            System.out.println("[1] Cadastrar bilhete");
+            System.out.println("[2] Carregar bilhete");
+            System.out.println("[3] Consultar saldo");
+            System.out.println("[4] Passar na Catraca");
+            System.out.println("[5] Finalizar");
             opcao = sc.nextInt();
-
-            switch (opcao){
-
-                case 1 -> carregar();
-
-                case 2 -> saldo();
-
-                case 3 -> passarNaCatraca();
-
-                case 4 -> System.out.println("Obrigado por usar nosso sistema :D");
-
-                default -> System.out.println("Opção inválida");
+            switch (opcao) {
+                case 1 -> cadastrar();
             }
-        } while (opcao!=4);
 
+        } while (opcao != 5);
 
 
     }
 
-    private static void passarNaCatraca() {
-        if (bilheteUnico.passarNaCatraca()==false){
-            System.out.println("Saldo insuficiente");
+    private static void cadastrar() {
+        String nome;
+        long cpf;
+        String tipoTarifa;
+
+        if (index < bilhete.length) {
+            System.out.println("Nome: ");
+            nome = sc.next();
+            System.out.println("CPF: ");
+            cpf = sc.nextLong();
+            System.out.println("Tipo de tarifa (estudante | professor | comum): ");
+            tipoTarifa = sc.next();
+            bilhete[index] = new BilheteUnico(new Usuario(nome, cpf, tipoTarifa));
+            index++;
         } else {
-            System.out.println("Você passou pela catraca e o valor foi descontado do seu saldo");
-            bilheteUnico.passarNaCatraca();
+            System.out.println("Erro ao gerar o bilhete!");
         }
-        saldo();
     }
 
-    private static void saldo() {
-        System.out.println("Saldo atual: R$ "+bilheteUnico.saldo );
-    }
-
-    private static void carregar() {
-        System.out.println("Digite o valor que deve ser adicionado: R$ ");
-        double valor=0;
-        valor= sc.nextDouble();
-        bilheteUnico.carregar(valor);
+    public BilheteUnico pesquisar() {
+        long cpf;
+        System.out.println("Qual o CPF para pesquisa? ");
+        cpf = sc.nextLong();
+        for (int i = 0; i < index; i++) {
+            if (bilhete[i].usuario.cpf == cpf) {
+                return bilhete[i];
+            }
+        }
+        System.out.println("CPF não encontrado");
+        return null;
     }
 }
