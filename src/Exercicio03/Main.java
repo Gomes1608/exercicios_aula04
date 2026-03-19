@@ -1,5 +1,6 @@
 package Exercicio03;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Main {
@@ -19,11 +20,43 @@ public class Main {
             opcao = sc.nextInt();
             switch (opcao) {
                 case 1 -> cadastrar();
+                case 2 -> carregar();
+                case 3 -> saldo();
+                case 4 -> passarCatraca();
+                case 5 -> System.out.println("Muito obrigado por usar nosso app");
             }
-
+            System.out.println("\n ----------------------------------------------");
         } while (opcao != 5);
 
 
+    }
+
+    private static void passarCatraca() {
+        BilheteUnico bilheteUnico = pesquisar();
+        if (bilheteUnico != null) {
+            if (!bilheteUnico.passarNaCatraca()){
+                System.out.println("Saldo insuficiente");
+            }
+            System.out.println("Saldo atual R$ "+bilheteUnico.saldo);
+        }
+    }
+
+    private static void saldo() {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        BilheteUnico bilheteUnico = pesquisar();
+        if (bilheteUnico != null){
+            System.out.println("Saldo atual R$ "+df.format(bilheteUnico.saldo));
+        }
+    }
+
+    private static void carregar() {
+        double valor;
+        BilheteUnico bilheteUnico = pesquisar();
+        if (bilheteUnico != null){
+            System.out.println("Valor da recarga: ");
+            valor = sc.nextDouble();
+            bilheteUnico.carregar(valor);
+        }
     }
 
     private static void cadastrar() {
@@ -45,7 +78,7 @@ public class Main {
         }
     }
 
-    public BilheteUnico pesquisar() {
+    public static BilheteUnico pesquisar() {
         long cpf;
         System.out.println("Qual o CPF para pesquisa? ");
         cpf = sc.nextLong();
